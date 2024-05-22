@@ -12,6 +12,15 @@ from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 
 def wordle():
+    target = random.choice(FIVE_LETTER_WORDS)
+
+    def has_common_letter(source, target):
+        for char in source:
+            if char in target:
+                return True
+            
+        return False
+
     def enter_action(s):
         # Build word from board
         i = 0
@@ -20,8 +29,10 @@ def wordle():
             word += gw.get_square_letter(0, i)
             i += 1
 
+        word = word.lower()
+        
         # MILESTONE 2
-        if word.lower() in FIVE_LETTER_WORDS:
+        if word in FIVE_LETTER_WORDS:
             gw.show_message("Word Found!")
         else:
             gw.show_message("Word not in list!")
