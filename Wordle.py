@@ -24,7 +24,6 @@ def wordle():
         return gw.get_square_letter(0, index)
     
     def build_word():
-        i = 0
         word = ""
         for i in range(N_COLS):
             char = gw.get_square_letter(0, i)
@@ -39,7 +38,6 @@ def wordle():
 
     def enter_action(s):
         if word_in_list():
-            i = 0
             for i in range(N_COLS):
 
                 char = get_char(i) 
@@ -53,8 +51,6 @@ def wordle():
                         
                 else:
                     gw.set_square_color(0, i, MISSING_COLOR)
-
-                i += 1
         else:
            gw.show_message("Word not in list!") 
         
