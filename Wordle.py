@@ -9,7 +9,13 @@
 import random
 
 from WordleDictionary import FIVE_LETTER_WORDS
-from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, MISSING_COLOR, CORRECT_COLOR, PRESENT_COLOR
+from WordleGraphics import (
+    WordleGWindow, 
+    N_COLS, N_ROWS, 
+    MISSING_COLOR, 
+    CORRECT_COLOR, 
+    PRESENT_COLOR
+)
 
 def wordle():
     target = random.choice(FIVE_LETTER_WORDS)
@@ -26,7 +32,7 @@ def wordle():
         return word.lower()
     
     def word_in_list():
-        word = build_word
+        word = build_word()
         if word in FIVE_LETTER_WORDS:
             return True
         return False
