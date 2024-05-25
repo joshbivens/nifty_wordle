@@ -18,42 +18,42 @@ from WordleGraphics import (
 )
 
 def wordle():
-    target = random.choice(FIVE_LETTER_WORDS)
+    target = random.choice(FIVE_LETTER_WORDS).upper()
+    current_row = 0
     
     def get_char(index):
-        return gw.get_square_letter(0, index)
+        return gw.get_square_letter(current_row, index)
     
     def build_word():
         word = ""
         for i in range(N_COLS):
-            char = gw.get_square_letter(0, i)
+            char = gw.get_square_letter(current_row, i)
             word += char
-        return word.lower()
+        return word
     
     def word_in_list():
         word = build_word()
-        if word in FIVE_LETTER_WORDS:
-            return True
-        return False
+        return word.lower() in FIVE_LETTER_WORDS 
 
     def enter_action(s):
+        nonlocal current_row
+
         if word_in_list():
             for i in range(N_COLS):
-
                 char = get_char(i) 
 
                 if char in target:
-
-                    if i == target.index(char):
-                        gw.set_square_color(0, i, CORRECT_COLOR)
+                    if target[i] == char:
+                        gw.set_square_color(current_row, i, CORRECT_COLOR)
                     else:
-                        gw.set_square_color(0, i, PRESENT_COLOR)
-                        
+                        gw.set_square_color(current_row, i, PRESENT_COLOR)  
                 else:
-                    gw.set_square_color(0, i, MISSING_COLOR)
+                    gw.set_square_color(current_row, i, MISSING_COLOR)
         else:
            gw.show_message("Word not in list!") 
         
+        current_row += 1
+
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
     gw.show_message(target)
@@ -62,6 +62,5 @@ def wordle():
     #     gw.set_square_letter(0, i, letter)
 
 # Startup code
-
 if __name__ == "__main__":
     wordle()
