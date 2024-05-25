@@ -57,9 +57,6 @@ def wordle():
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
     gw.show_message(target)
-    # MILESTONE 1
-    # for i, letter in enumerate(random.choice(FIVE_LETTER_WORDS)):
-    #     gw.set_square_letter(0, i, letter)
 
 # Startup code
 if __name__ == "__main__":
