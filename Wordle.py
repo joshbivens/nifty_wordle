@@ -10,10 +10,10 @@ import random
 
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import (
-    WordleGWindow, 
-    N_COLS, N_ROWS, 
-    MISSING_COLOR, 
-    CORRECT_COLOR, 
+    WordleGWindow,
+    N_COLS, N_ROWS,
+    MISSING_COLOR,
+    CORRECT_COLOR,
     PRESENT_COLOR
 )
 
@@ -27,30 +27,47 @@ def wordle():
     def build_word():
         word = ""
         for i in range(N_COLS):
-            char = gw.get_square_letter(current_row, i)
+            char = get_char(i)
             word += char
         return word
-    
+     
     def word_in_list():
         word = build_word()
-        return word.lower() in FIVE_LETTER_WORDS 
+        return word.lower() in FIVE_LETTER_WORDS
 
     def enter_action(s):
         nonlocal current_row
-
+        
         if word_in_list():
+            word = build_word()
+            target_mask = list(target)
+        
+            # First past - knocks off correct positions in target mask
             for i in range(N_COLS):
-                char = get_char(i) 
+                if word[i] == target[i]:
+                    gw.set_square_color(current_row, i, CORRECT_COLOR)
+                    target_mask[i] = None
 
-                if char in target:
-                    if target[i] == char:
-                        gw.set_square_color(current_row, i, CORRECT_COLOR)
-                    else:
-                        gw.set_square_color(current_row, i, PRESENT_COLOR)  
+            # Second pass - If any letters still present in mask, marks them as PRESENT
+            # Else, marks them as MISSING
+            for i in range(N_COLS):
+                if word[i] in target_mask:
+                    gw.set_square_color(current_row, i, PRESENT_COLOR)
                 else:
                     gw.set_square_color(current_row, i, MISSING_COLOR)
+
+                # char = get_char(i) 
+
+                # if char in target:
+                #     if target[i] == char:
+                #         gw.set_square_color(current_row, i, CORRECT_COLOR)
+                #     else:
+                #         gw.set_square_color(current_row, i, PRESENT_COLOR)  
+                # else:
+                #     gw.set_square_color(current_row, i, MISSING_COLOR)
+                
         else:
-           gw.show_message("Word not in list!") 
+           gw.show_message("Word not in list!")
         
         current_row += 1
 
